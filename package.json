@@ -5,7 +5,8 @@
   "license": "BSD-3-Clause",
   "private": true,
   "scripts": {
-    "build": "d2-app-scripts build",
+    "build": "yarn build:css && d2-app-scripts build",
+    "build:css": "tailwindcss -o src/tailwind.css",
     "start": "concurrently --names \"CSS,CRP\" \"yarn start:css\" \"GENERATE_SOURCEMAP=true d2-app-scripts start\" --hide \"CSS\"",
     "start:css": "tailwindcss -o src/tailwind.css --watch",
     "test": "d2-app-scripts test",
