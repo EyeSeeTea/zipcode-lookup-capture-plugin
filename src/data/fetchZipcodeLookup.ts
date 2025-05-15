@@ -47,7 +47,8 @@ export async function fetchZipcodeLookup(
   const locality = firstSuggestion?.locality;
   const stateCode = locality?.region?.code as keyof typeof states | undefined;
   const state = states[stateCode];
-  const city = locality?.sub_region?.name;
+  // sometimes town is not available
+  const city = (locality?.town ?? locality?.sub_region)?.name;
   return {
     city,
     state,
