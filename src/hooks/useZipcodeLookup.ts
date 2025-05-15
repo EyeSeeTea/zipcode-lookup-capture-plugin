@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { SetFieldValueProps } from "../Plugin.types";
+import { PluginField, SetFieldValueProps } from "../Plugin.types";
 import { fetchZipcodeLookup } from "../data/fetchZipcodeLookup";
 import { type Message } from "../domain/entities/Message";
 import i18n from "@dhis2/d2-i18n";
@@ -11,6 +11,17 @@ type Props = {
 
 export const useZipCodeLookup = ({ setFieldValue }: Props) => {
   const [message, setMessage] = React.useState<Message | null>(null);
+  const setValidValue = (fieldId: PluginField, value: string) => {
+    setFieldValue({
+      fieldId,
+      value,
+      options: {
+        valid: true,
+        touched: true,
+      },
+    });
+  };
+
   const { isLoading, mutate } = useMutation({
     mutationFn: ({ zipCode }: { zipCode: string }) =>
       fetchZipcodeLookup(zipCode),
@@ -25,25 +36,16 @@ export const useZipCodeLookup = ({ setFieldValue }: Props) => {
             "No address information could be found for the provided ZIP code"
           ),
         });
+        setValidValue("city", " ");
+        setValidValue("state", " ");
+        // TODO: setting empty strings is not updating the values in the form
+        setValidValue("city", "");
+        setValidValue("state", "");
         return;
       }
       const { city, state } = data;
-      setFieldValue({
-        fieldId: "city",
-        value: city,
-        options: {
-          valid: true,
-          touched: true,
-        },
-      });
-      setFieldValue({
-        fieldId: "state",
-        value: state,
-        options: {
-          valid: true,
-          touched: true,
-        },
-      });
+      setValidValue("city", city);
+      setValidValue("state", state);
     },
     onError: (error) => {
       console.error("Error fetching data:", error);
