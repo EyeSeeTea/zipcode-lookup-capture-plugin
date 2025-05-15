@@ -15,17 +15,22 @@ export const ZipCodeSearch = ({ setFieldValue, zipCode }: Props) => {
       search(zipCode);
     }
   }, [zipCode, search]);
+
+  if (!message) {
+    return null;
+  }
+
   return (
-    <div className={"w-full flex"}>
-      <div className="flex-1">
-        {message && (
+    <div className="bg-white w-lvw flex p-2 text-sm">
+      <div className={"w-full flex"}>
+        <div className="flex-1">
           <NoticeBox
             warning={message.type === "warning"}
             error={message.type === "error"}
           >
             {message.text}
           </NoticeBox>
-        )}
+        </div>
       </div>
     </div>
   );

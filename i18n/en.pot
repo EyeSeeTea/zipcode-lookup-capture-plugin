@@ -5,11 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2025-05-08T14:37:54.879Z\n"
-"PO-Revision-Date: 2025-05-08T14:37:54.880Z\n"
-
-msgid "Search ZIP code"
-msgstr "Search ZIP code"
+"POT-Creation-Date: 2025-05-15T13:08:05.618Z\n"
+"PO-Revision-Date: 2025-05-15T13:08:05.619Z\n"
 
 msgid "No address information could be found for the provided ZIP code"
 msgstr "No address information could be found for the provided ZIP code"
@@ -19,7 +16,7 @@ msgstr "An error occurred while fetching address information"
 
 msgctxt "Application title"
 msgid "__MANIFEST_APP_TITLE"
-msgstr "Zipcode Lookup Plugin"
+msgstr "Zipcode Lookup Capture Plugin"
 
 msgctxt "Application description"
 msgid "__MANIFEST_APP_DESCRIPTION"

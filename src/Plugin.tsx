@@ -11,12 +11,10 @@ const PluginInner = (propsFromParent: IDataEntryPluginProps) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="bg-white w-lvw flex p-2 text-sm">
-        <ZipCodeSearch
-          setFieldValue={setFieldValue}
-          zipCode={values?.zipCode ?? ""}
-        />
-      </div>
+      <ZipCodeSearch
+        setFieldValue={setFieldValue}
+        zipCode={values?.zipCode ?? ""}
+      />
     </QueryClientProvider>
   );
 };
