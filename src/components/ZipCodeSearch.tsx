@@ -1,9 +1,7 @@
 import React from "react";
-import i18n from "@dhis2/d2-i18n";
-import { Button } from "@dhis2/ui";
+import { NoticeBox } from "@dhis2/ui";
 import { SetFieldValueProps } from "../Plugin.types";
 import { useZipCodeLookup } from "../hooks/useZipcodeLookup";
-import { MessageBox } from "./MessageBox";
 
 type Props = {
   setFieldValue: (values: SetFieldValueProps) => void;
@@ -11,18 +9,24 @@ type Props = {
 };
 
 export const ZipCodeSearch = ({ setFieldValue, zipCode }: Props) => {
-  const { search, isLoading, message } = useZipCodeLookup({ setFieldValue });
+  const { search, message } = useZipCodeLookup({ setFieldValue });
+  React.useEffect(() => {
+    if (zipCode) {
+      search(zipCode);
+    }
+  }, [zipCode, search]);
   return (
     <div className={"w-full flex"}>
-      <div className={"flex-1"}>{message && <MessageBox {...message} />}</div>
-      <Button
-        primary
-        loading={isLoading}
-        onClick={() => search(zipCode)}
-        disabled={!zipCode}
-      >
-        {i18n.t("Search ZIP code")}
-      </Button>
+      <div className="flex-1">
+        {message && (
+          <NoticeBox
+            warning={message.type === "warning"}
+            error={message.type === "error"}
+          >
+            {message.text}
+          </NoticeBox>
+        )}
+      </div>
     </div>
   );
 };

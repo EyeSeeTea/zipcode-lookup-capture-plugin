@@ -56,8 +56,15 @@ export const useZipCodeLookup = ({ setFieldValue }: Props) => {
     },
   });
 
+  const search = React.useCallback(
+    (zipCode: string) => {
+      mutate({ zipCode });
+    },
+    [mutate]
+  );
+
   return {
-    search: (zipCode: string) => mutate({ zipCode }),
+    search,
     isLoading,
     message,
   };
