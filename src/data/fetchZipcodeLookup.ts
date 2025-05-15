@@ -43,7 +43,9 @@ export async function fetchZipcodeLookup(
     console.warn("No matching suggestion found");
     return null;
   }
-  const firstSuggestion = allSuggestions[0];
+  // prefer suggestions with town (more specific)
+  const firstSuggestion =
+    allSuggestions.find((s: any) => s.locality?.town) ?? allSuggestions[0];
   const locality = firstSuggestion?.locality;
   const stateCode = locality?.region?.code as keyof typeof states | undefined;
   const state = states[stateCode];
