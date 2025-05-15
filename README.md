@@ -2,7 +2,7 @@
 
 Based on the [Civil Registry Mock Plugin](https://github.com/eirikhaugstulen/civil-registry-plugin/).
 
-Adds a button that allows auto-populating State and City from a Zip Code.
+After changes to the `zipCode` field, the plugin performs an API lookup and automatically populates the `state` and `city` fields.
 
 ### How to use
 
