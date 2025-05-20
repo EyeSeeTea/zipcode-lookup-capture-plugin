@@ -5,26 +5,19 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-06-26T10:58:19.149Z\n"
-"PO-Revision-Date: 2024-06-26T10:58:19.149Z\n"
+"POT-Creation-Date: 2025-05-15T13:08:05.618Z\n"
+"PO-Revision-Date: 2025-05-15T13:08:05.619Z\n"
 
-msgid "Add"
-msgstr ""
+msgid "No address information could be found for the provided ZIP code"
+msgstr "No address information could be found for the provided ZIP code"
 
-msgid "List"
-msgstr ""
+msgid "An error occurred while fetching address information"
+msgstr "An error occurred while fetching address information"
 
-msgid "Back"
-msgstr ""
+msgctxt "Application title"
+msgid "__MANIFEST_APP_TITLE"
+msgstr "Zipcode Lookup Capture Plugin"
 
-msgid "Help"
-msgstr ""
-
-msgid "Hello {{name}}"
-msgstr ""
-
-msgid "Detail page"
-msgstr ""
-
-msgid "Section"
-msgstr ""
+msgctxt "Application description"
+msgid "__MANIFEST_APP_DESCRIPTION"
+msgstr "A Capture Plugin to look up zipcodes and prefill city and state information"

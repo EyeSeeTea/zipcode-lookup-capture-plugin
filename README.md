@@ -1,77 +1,59 @@
-## Setup
+## Zipcode lookup Capture Plugin
 
-```
-$ nvm use # uses node version in .nvmrc
-$ yarn install
-```
+Based on the [Civil Registry Mock Plugin](https://github.com/eirikhaugstulen/civil-registry-plugin/).
 
-## Build
+After changes to the `zipCode` field, the plugin performs an API lookup and automatically populates the `state` and `city` fields.
 
-Build a production distributable DHIS2 zip file:
+### How to use
 
-```
-$ yarn build
-```
+1. Install plugin `.zip` file
+2. Download and install the Tracker configurator app from the _App management application_ or from the [App hub](https://apps.dhis2.org/app/85d156b7-6e3f-43f0-be57-395449393f7d).
+3. Follow the instructions in the Tracker configurator app to configure the plugin.
+4. Open the Capture app and create or edit the configured entity.
 
-## Development
+### Development
 
-Copy `.env` to `.env.local` and configure DHIS2 instance to use. Then start the development server:
+1. `yarn install`
+2. `yarn start`
+3. Configure the plugin in Tracker Plugin Configurator with "Add Local Plugin" -> url: `http://localhost:3001/plugin.html`.
 
-```
-$ yarn start
-```
+### Generate a release
 
-Now in your browser, go to `http://localhost:8081`.
+1. `yarn install`
+2. Update `version` in `package.json` if required
+3. `yarn build`
 
-## Tests
+The output will be the `build/bundle/zipcode-lookup-plugin-{version}.zip` file, ready to upload in App Management -> Manual Install.
 
-```
-$ yarn test
-```
+### Configuration
 
-## Some development tips
+The plugin expects three tracked entity attributes to be configured in the field map. Please configure this in the Tracker configurator app.
 
-### Clean architecture folder structure
+Example
 
--   `src/domain`: Domain layer of the app (entities, use cases, repository definitions)
--   `src/data`: Data of the app (repository implementations)
--   `src/webapp/pages`: Main React components.
--   `src/webapp/components`: React components.
--   `src/utils`: Misc utilities.
--   `i18n/`: Contains literal translations (gettext format)
--   `public/`: General non-React webapp resources.
+| Attribute ID | Plugin alias | Type |
+| ------------ | ------------ | ---- |
+| w75KJ2mc4zz  | zipCode      | Text |
+| zDhUuAYrxNC  | state        | Text |
+| cejWyOfXge6  | city         | Text |
 
-## Data structures
+### Important notes
 
--   `Future.ts`: Async values, similar to promises, but cancellables and with type-safe errors.
--   `Collection.ts`: Similar to Lodash, provides a wrapper over JS arrays.
--   `Obj.ts`: Similar to Lodash, provides a wrapper over JS objects.
--   `HashMap.ts`: Similar to ES6 map, but immutable.
--   `Struct.ts`: Base class for typical classes with attributes. Features: create, update.
--   `Either.ts`: Either a success value or an error.
+#### API Integration
 
-## Docs
+This plugin expects that a [route](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-241/route.html) is configured.
 
-We use [TypeDoc](https://typedoc.org/example/):
+The route must be named `zipcode-lookup`. When searching, a POST request will be made with the following JSON body:
 
-```
-$ yarn generate-docs
+```json
+{
+  "datasets": ["us-address"],
+  "key": {
+    "type": "postal_code",
+    "value": "{{zip code}}"
+  },
+  "country_iso": "USA"
+}
 ```
 
-### i18n
-
-Update i18n .po files from `i18n.t(...)` calls in the source code:
-
-```
-$ yarn localize
-```
-
-### Scripts
-
-Check the example script, entry `"script-example"`in `package.json`->scripts and `src/scripts/example.ts`.
-
-### Misc Notes
-
--   Requests to DHIS2 will be transparently proxied (see `vite.config.ts` -> `server.proxy`) from `http://localhost:8081/dhis2/xyz` to `${VITE_DHIS2_BASE_URL}/xyz`. This prevents CORS and cross-domain problems.
-
--   You can use `.env` variables within the React app: `const value = import.meta.env.NAME;`
+To switch this API integration, change the `fetchZipcodeLookup` implementation. An alternative example can be found at `fetchZipcodeLookupZippo`.
